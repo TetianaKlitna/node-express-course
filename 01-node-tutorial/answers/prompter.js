@@ -10,7 +10,7 @@ const getBody = (req, callback) => {
   req.on('end', function () {
     body += decode.end();
     const body1 = decodeURI(body);
-    const bodyArray = body1.split('&');
+    const bodyArray = body1.replace(/\+/g, ' ').split('&');
     const resultHash = {};
     bodyArray.forEach((part) => {
       const partArray = part.split('=');
@@ -26,6 +26,7 @@ let answer = Math.floor(Math.random() * 100) + 1;
 let guess = '';
 let message = '';
 let win = false;
+let isError = false;
 
 // here, you can change the form below to modify the input fields and what is displayed.
 // This is just ordinary html with string interpolation.
@@ -65,31 +66,45 @@ const server = http.createServer((req, res) => {
         guess = '';
         message = '';
         win = false;
+        isError = false;
       } else if (req.url === '/newgame') {
-        if (body['guess']) {
-          guess = Number(body['guess']);
+        const guessStr = (body['guess'] || '').trim();
+        if (!guessStr) {
+          message =
+            '<span style="color:red">Please write something!</span><br>';
+          guess = 'Nothing was entered';
+          isError = true;
         } else {
-          guess = 'Nothing was entered.';
+          guess = Number(guessStr);
+          isError = false;
+          if (isNaN(guess) || guess < 1 || guess > 100) {
+            message =
+              '<span style="color:red">WRONG INPUT!</span> Please enter a number between 1 and 100.<br>';
+            guess = 'Wrong Input';
+            isError = true;
+          }
         }
 
-        if (guess < answer) {
-          message =
-            '<span style="color:red">WRONG!</span> Too low! Try a higher number.<br>';
-        } else if (guess > answer) {
-          message =
-            '<span style="color:red">WRONG!</span> Too high! Try a lower number.<br>';
-        } else {
-          message =
-            '<span style="color:green"><b>Congratulations!</b> You guessed it!</span>';
-          win = true;
-        }
+        if (!isError) {
+          if (guess < answer) {
+            message =
+              '<span style="color:red">WRONG!</span> Too low! Try a higher number.<br>';
+          } else if (guess > answer) {
+            message =
+              '<span style="color:red">WRONG!</span> Too high! Try a lower number.<br>';
+          } else if (guess === answer) {
+            message =
+              '<span style="color:green"><b>Congratulations!</b> You guessed it!</span>';
+            win = true;
+          }
 
-        if (!win) {
-          attempts--;
-          message += `<b>You have ${attempts} attempt left.</b>`;
+          if (!win) {
+            attempts--;
+            message += `<b>You have ${attempts} attempt left.</b>`;
 
-          if (attempts === 0) {
-            message = `<span style="color:red"><b>Out of attempts!</b> The correct number was ${answer}.</span>`;
+            if (attempts === 0) {
+              message = `<span style="color:red"><b>Out of attempts!</b> The correct number was ${answer}.</span>`;
+            }
           }
         }
       }
