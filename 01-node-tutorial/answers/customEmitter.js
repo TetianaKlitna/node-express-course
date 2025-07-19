@@ -9,28 +9,28 @@ class VirtualPet {
     this.energy = 100;
   }
 
-  petFeed = () => {
+  petFeed(){
     this.hungry = Math.max(this.hungry - 20, 0);
     this.happiness = Math.min(this.happiness + 10, 100);
     this.energy = Math.min(this.energy + 10, 100);
     this.petMood();
   };
 
-  petSleep = () => {
+  petSleep(){
     this.energy = Math.min(this.energy + 20, 100);
     this.hungry = Math.min(this.hungry + 10, 100);
     this.happiness = Math.min(this.happiness + 10, 100);
     this.petMood();
   };
 
-  petPlay = () => {
+  petPlay(){
     this.happiness = Math.min(this.happiness + 30, 100);
     this.energy = Math.max(this.energy - 20, 0);
     this.hungry = Math.min(this.hungry + 10, 100);
     this.petMood();
   };
 
-  petIgnored = () => {
+  petIgnored(){
     console.log(`${this.name.toUpperCase()} FEELS IGNORED!`);
     this.energy = Math.max(this.energy - 10, 0);
     this.hungry = Math.min(this.hungry + 10, 100);
@@ -38,7 +38,7 @@ class VirtualPet {
     this.petMood();
   };
 
-  petMood = () => {
+  petMood(){
     const getEmoji = (param, type = 'desc') => {
       if (type == 'desc') {
         return param >= 70 ? '😄' : param >= 40 ? '😐' : '😭';
