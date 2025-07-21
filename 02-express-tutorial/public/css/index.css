@@ -1,0 +1,362 @@
+body {
+  background: linear-gradient(#273b3a40, #f5f7f8, #37977780);
+  font-family: "Trirong", serif;
+  width: 90%;
+  max-width: 1200px;
+  margin: 2% auto; 
+  font-size: 20px;
+
+  /*
+    height: auto;
+    background-attachment: fixed;
+    background-size: cover;
+  */
+}
+
+/*--------Start Layout Grid------*/
+ .container {
+  height: 100%;
+  display: grid;
+  grid-gap: 0.5em; 
+  grid-template-areas: 
+      "h h h h h"
+      "m m m m m"
+      "c c c c c"
+      "f f f f f";
+}
+
+.header {
+  grid-area: h;
+}
+
+
+.menu {
+  grid-area: m;
+
+}
+
+.content {
+  grid-area: c;
+}
+
+.footer {
+  grid-area: f;
+} 
+
+/*--------End Layout Grid------*/
+/*--------Start Flex Box-------*/
+.menu,
+.nav-bar{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/*Right position of LinkedIn and GitHub items in the menu*/
+.menu-items{
+  margin-right: auto;
+}
+.job{
+  display: flex;
+}
+
+.date-period{
+  margin-right: auto;
+}
+
+.social-media{
+  display: flex;
+}
+
+.intro{
+  display: flex;
+  flex-direction: row;
+}
+
+#connect ul{
+  display: flex;
+  flex-direction: horizontal;
+  flex-wrap: wrap;
+}
+
+
+/*--------End Flex Box------*/
+/*--------Header------------*/
+.header {
+  background-color: #273b3a;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  position: relative; 
+  width: 80%;
+} 
+
+h1{
+  font-family: "Sofia", sans-serif;
+  font-size: 24px;
+  text-align: left;
+}
+/*--------Menu------------*/
+
+nav{
+  text-align: center;
+  align-items: center;
+}
+
+.menu{
+  font-size: 1.5rem;
+  background-color:  #273b3a50;
+  color: #f5f7f8;
+}
+
+.nav-bar{
+  padding:0;
+  list-style: none;
+  gap: 1em;
+}
+
+.menu a {
+  text-decoration: none;
+  color: #f5f7f8;
+}
+
+.menu a:hover,
+.menu a:focus{
+   color: #273b3a;
+} 
+
+/*-- image as a checkbox in CSS----*/
+input[type="checkbox"] {
+  appearance: none;
+  width: 48px;
+  height: 48px; 
+  background-image: url('../img/menu_icon.png');
+  background-size: cover;
+  cursor: pointer; 
+}
+
+input[type="checkbox"]:checked {
+  background-image: url('../img/delete_icon.png');
+}
+
+
+/*------Content-----------*/
+.content {
+  font-size: 1rem;
+  background-color: #f5f7f890;
+  color: #273b3a;
+}
+
+h2 {
+  text-align: center;
+  color: #379777;
+  font-size: 1.5rem;
+  font-weight:400;
+}
+
+hr {
+  border: 1px solid #273b3a80;
+  width: 100%;
+  margin: 1em 0;
+}
+
+p {
+  text-indent: 1em;
+}
+
+a{
+  text-decoration: none;
+  color: #273b3a;
+}
+
+/*------------Content: Home--------------*/
+
+.text-section {
+  flex: 50%;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/*LinkedIn logo, GitHub, ect*/
+.img-logo {
+  margin: 2px;
+}
+
+/*Style for my foto*/
+.img-section{
+  text-align: center;
+}
+
+.img-section img {
+  width: 60%;
+  border-radius: 50%;
+  border: 2px solid #273b3a;
+  box-shadow: 0px 4px 25px #45474b;
+  margin: 2%;
+}
+
+/*------------Content: About-----*/
+#about {
+  text-align: justify;
+}
+/*------------Content: Expriance-------*/
+.date-period,
+.job{
+  font-weight:bold;
+}
+/*------------Content: Skills-----*/
+.images-grid {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-auto-rows: 200px;
+  text-align: center;
+}
+
+/*------------Content: Connect-----*/
+#connect img {
+  padding: 0.5em;
+}
+/*--------------------*/
+
+.a-link {
+  /*centered text*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}
+
+.links{
+    list-style-type: none;
+    display: flex;
+    flex-direction: horizontal;
+    flex-wrap: wrap;
+    padding-left: 10px;
+    align-items: left;
+    justify-content: space-between;
+  }
+
+/* Leave message and messages */
+input, textarea{
+  width: 100%;
+}
+
+textarea{
+  min-height: 100px;
+}
+
+.btn-style {
+  background-color: #379777;
+  border: none;
+  color: #f5f7f8;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  margin: 1px 1px;
+  cursor: pointer;
+}
+
+btn-remove{
+  text-decoration: none;
+  border: 0;
+  display: inline-block;
+  cursor: pointer;
+}
+
+#messages{
+  display: none;
+}
+  
+/*-------------------------*/
+.header,
+.footer {
+  font-size: 1rem;
+  background-color: #273b3a;
+  color: #f5f7f8;
+  text-align: center;
+} 
+
+.border-style { 
+  border-radius: 0.5em;
+  padding: 1em;
+  border: 2px solid #273b3a;
+  box-shadow: 0px 0.5em 1em #45474b;
+}
+/*--------Start Media-------*/
+/*styles for mobiles*/
+@media (max-width: 1035px)
+ { 
+
+  .img-section img {
+    width: 40%;
+  }
+
+  .intro{
+    flex-direction: column;
+  }
+  .nav-bar{
+    flex-direction: column;
+  }
+  .menu{
+    text-align: left;
+    align-items: start;
+  }
+
+  .nav-bar{
+    display: none;
+  }
+
+  /*when the checkbox is checked, we’ll show the menu*/
+  #humburger:checked ~ 
+  .nav-bar {
+    display: block;
+  }
+
+}
+/*styles for tablets*/
+@media (min-width: 1036px) and (max-width: 1070px){
+  /* .nav-bar{
+    flex-direction: column;
+  }
+  .menu{
+    text-align: left;
+    align-items: start;
+  } */
+
+  body {
+    font-size: 16px;
+  }
+
+  #humburger{
+    display: none;
+  }
+
+  .nav-bar{
+    display: flex;
+  }
+  
+}
+
+
+/* styles for desktops*/
+@media (min-width: 1070px) {
+   body {
+    font-size: 24px;
+   }
+
+  .nav-bar{
+    display: flex;
+  }
+
+  #humburger{
+    display: none;
+  }
+ 
+}
+/*--------End Media---------*/
