@@ -1,10 +1,13 @@
 const express = require('express');
+const logger = require('./logger');
 const app = express();
-const { products } = require('./data');
+const { products, people } = require('./data');
+
+app.use(['/api/v1/products', '/api/v1/query'], logger);
 
 app.use(express.static('./public'));
 
-app.get('/api/v1/test', (req, res) => {
+app.get('/api/v1/test', logger, (req, res) => {
   res.status(200).json({ message: 'It worked!' });
 });
 
@@ -37,6 +40,19 @@ app.get('/api/v1/query', (req, res) => {
       .json({ message: 'No products matched your search.' });
   }
   res.status(200).json(filtered);
+});
+
+app.get('/api/v1/people', (req, res) => {
+  res.status(200).json(people);
+});
+
+app.get('/api/v1/people/:id', (req, res) => {
+  const id = Number(req.params.id);
+  const person = people.find((person) => person.id === id);
+  if (!person) {
+    return res.status(404).json({ message: 'That person was not found' });
+  }
+  res.status(200).json(person);
 });
 
 app.all('/{*any}', (req, res) => {
