@@ -1,10 +1,17 @@
 const express = require('express');
-const app = express();
+const logger = require('./logger');
+const peopleRouter = require('./routes/people');
 const { products } = require('./data');
+const app = express();
 
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(['/api/v1/products', '/api/v1/query'], logger);
 app.use(express.static('./public'));
 
-app.get('/api/v1/test', (req, res) => {
+app.use("/api/v1/people", peopleRouter);
+
+app.get('/api/v1/test', logger, (req, res) => {
   res.status(200).json({ message: 'It worked!' });
 });
 
