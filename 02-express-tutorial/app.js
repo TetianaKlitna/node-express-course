@@ -1,12 +1,15 @@
 const express = require('express');
 const logger = require('./logger');
+const peopleRouter = require('./routes/people');
+const { products } = require('./data');
 const app = express();
-const { products, people } = require('./data');
 
-app.use(['/api/v1/products', '/api/v1/query'], logger);
-app.use(express.static('./public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(['/api/v1/products', '/api/v1/query'], logger);
+app.use(express.static('./public'));
+
+app.use("/api/v1/people", peopleRouter);
 
 app.get('/api/v1/test', logger, (req, res) => {
   res.status(200).json({ message: 'It worked!' });
@@ -41,21 +44,6 @@ app.get('/api/v1/query', (req, res) => {
       .json({ message: 'No products matched your search.' });
   }
   res.status(200).json(filtered);
-});
-
-app.get('/api/v1/people', (req, res) => {
-  res.status(200).json(people);
-});
-
-app.post('/api/v1/people', (req, res) => {
-  const { name } = req.body;
-  if (!name) {
-    return res
-      .status(400)
-      .json({ success: false, message: 'Please provide a name' });
-  }
-  people.push({ id: people.length + 1, name: req.body.name });
-  res.status(201).json({ success: true, name: req.body.name });
 });
 
 app.all('/{*any}', (req, res) => {
