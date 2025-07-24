@@ -4,8 +4,9 @@ const app = express();
 const { products, people } = require('./data');
 
 app.use(['/api/v1/products', '/api/v1/query'], logger);
-
 app.use(express.static('./public'));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.get('/api/v1/test', logger, (req, res) => {
   res.status(200).json({ message: 'It worked!' });
@@ -46,13 +47,15 @@ app.get('/api/v1/people', (req, res) => {
   res.status(200).json(people);
 });
 
-app.get('/api/v1/people/:id', (req, res) => {
-  const id = Number(req.params.id);
-  const person = people.find((person) => person.id === id);
-  if (!person) {
-    return res.status(404).json({ message: 'That person was not found' });
+app.post('/api/v1/people', (req, res) => {
+  const { name } = req.body;
+  if (!name) {
+    return res
+      .status(400)
+      .json({ success: false, message: 'Please provide a name' });
   }
-  res.status(200).json(person);
+  people.push({ id: people.length + 1, name: req.body.name });
+  res.status(201).json({ success: true, name: req.body.name });
 });
 
 app.all('/{*any}', (req, res) => {
