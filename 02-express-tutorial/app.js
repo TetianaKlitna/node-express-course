@@ -36,7 +36,7 @@ app.get('/test', auth, (req, res) => {
   res.status(200).json({ success: true, msg: `Welcome, ${name}!` });
 });
 
-app.delete('/logoff', (req, res) => {
+app.delete('/logoff', auth, (req, res) => {
   const name = req.user;
   res
     .clearCookie('name')
