@@ -12,8 +12,7 @@ const getAllTasks = async (req, res) => {
 
 const createTask = async (req, res) => {
   try {
-    const name = req.body.name;
-    let completed = req.body.completed;
+    const { name, completed } = req.body;
     const task = await Task.create({ name, completed });
     res.status(201).json({ success: true, task });
   } catch (error) {
@@ -33,12 +32,10 @@ const getTask = async (req, res) => {
   try {
     const task = await Task.findById(taskID);
     if (!task) {
-      return res
-        .status(404)
-        .json({
-          success: false,
-          error: `Task with ID: ${taskID} is not found`,
-        });
+      return res.status(404).json({
+        success: false,
+        error: `Task with ID: ${taskID} is not found`,
+      });
     }
     res.status(200).json({ success: true, task });
   } catch (error) {
@@ -49,19 +46,13 @@ const getTask = async (req, res) => {
 };
 
 const updateTask = async (req, res) => {
-  const id = req.params.id;
-  if (!id) {
+  const { id: TaskID } = req.params;
+  if (!TaskID) {
     return res
       .status(400)
       .json({ success: false, error: 'Task id is required.' });
   }
   const { name, completed } = req.body;
-  if (name === undefined && completed === undefined) {
-    return res.status(400).json({
-      success: false,
-      error: 'Please provide at least one field: name or completed',
-    });
-  }
   try {
     const task = await Task.findByIdAndUpdate(id, req.body, { new: true });
     if (!task) {
@@ -71,7 +62,7 @@ const updateTask = async (req, res) => {
     }
     res.status(200).json({ success: true, task });
   } catch (error) {
-    console.error('Error during updating the task with id: ${id} ${req.body}');
+    console.error(`Error during updating the task with id: ${id} ${req.body}`);
     console.error(error);
     res.status(500).json({ success: false, error: error.message });
   }
@@ -87,12 +78,10 @@ const deleteTask = async (req, res) => {
     }
     const task = await Task.findByIdAndDelete(taskID);
     if (!task) {
-      return res
-        .status(404)
-        .json({
-          success: false,
-          error: `Task with ID: ${taskID} is not found.`,
-        });
+      return res.status(404).json({
+        success: false,
+        error: `Task with ID: ${taskID} is not found.`,
+      });
     }
     res.status(200).json({ success: true, task });
   } catch (error) {
