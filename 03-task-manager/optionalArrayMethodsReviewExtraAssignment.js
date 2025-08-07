@@ -154,8 +154,37 @@ const names = [
   'Carlos d. Perez',
   'tam  person',
   'Mariana Gomez',
-  'Amy You'
+  'Amy You',
 ];
+
+const lastNames = names.map((name) => name.trim().split(' ').pop());
+console.log(lastNames);
+
+const filteredNames = names.filter(
+  (name) => name.trim().split(' ').length === 2
+);
+console.log(filteredNames);
+
+const titleCaseFirstName = names.map((name) =>
+  name
+    .trim()
+    .split(/\s+/)
+    .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ')
+);
+console.log(titleCaseFirstName);
+
+names
+  .filter((name) => name.trim().split(' ').length === 2)
+  .map((name) =>
+    name
+      .trim()
+      .split(/\s+/)
+      .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ')
+  )
+  .filter((name) => name[name.length - 1] !== 'z')
+  .forEach((name) => console.log(`${name}, please sign up`));
 
 ///////////////////////////////////////////////////////////////////////////////
 //// put your answers above if you wish to do the challenges on your own //////
