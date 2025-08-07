@@ -3,7 +3,6 @@ const Task = require('../models/Task');
 const getAllTasks = async (req, res) => {
   try {
     const tasks = await Task.find();
-    console.log(tasks);
     res.status(200).json({ success: true, tasks });
   } catch (error) {
     console.error(`Error during fetching  ${error}`);
@@ -14,13 +13,7 @@ const getAllTasks = async (req, res) => {
 const createTask = async (req, res) => {
   try {
     const name = req.body.name;
-    if (!name) {
-      return res
-        .status(400)
-        .json({ success: false, error: 'Task name is required.' });
-    }
-    let completed = req.body?.completed || false;
-
+    let completed = req.body.completed;
     const task = await Task.create({ name, completed });
     res.status(201).json({ success: true, task });
   } catch (error) {
@@ -31,22 +24,25 @@ const createTask = async (req, res) => {
 };
 
 const getTask = async (req, res) => {
-  const id = req.params.id;
-  if (!id) {
+  const { id: taskID } = req.params;
+  if (!taskID || taskID.trim() === '') {
     return res
       .status(400)
-      .json({ success: false, error: 'Task id is required.' });
+      .json({ success: false, error: 'Task ID is required.' });
   }
   try {
-    const task = await Task.findById(id);
+    const task = await Task.findById(taskID);
     if (!task) {
       return res
         .status(404)
-        .json({ success: false, error: 'Task is not found' });
+        .json({
+          success: false,
+          error: `Task with ID: ${taskID} is not found`,
+        });
     }
     res.status(200).json({ success: true, task });
   } catch (error) {
-    console.error(`Error during getting the task with id: ${id}`);
+    console.error(`Error during getting the task with ID: ${taskID}`);
     console.error(error);
     res.status(500).json({ success: false, error: error.message });
   }
@@ -82,22 +78,25 @@ const updateTask = async (req, res) => {
 };
 
 const deleteTask = async (req, res) => {
-  const id = req.params.id;
+  const { id: taskID } = req.params;
   try {
-    if (!id) {
+    if (!taskID || taskID.trim() === '') {
       return res
         .status(400)
-        .json({ success: false, error: 'Task id is required.' });
+        .json({ success: false, error: 'Task ID is required.' });
     }
-    const task = await Task.findByIdAndDelete(id);
+    const task = await Task.findByIdAndDelete(taskID);
     if (!task) {
       return res
         .status(404)
-        .json({ success: false, error: 'Task is not found.' });
+        .json({
+          success: false,
+          error: `Task with ID: ${taskID} is not found.`,
+        });
     }
     res.status(200).json({ success: true, task });
   } catch (error) {
-    console.error(`Error during deleteting the task with id: ${id}`);
+    console.error(`Error during deleteting the task with ID: ${taskID}`);
     console.error(error);
     res.status(500).json({ success: error, error: error.message });
   }
