@@ -46,15 +46,17 @@ const getTask = async (req, res) => {
 };
 
 const updateTask = async (req, res) => {
-  const { id: TaskID } = req.params;
-  if (!TaskID) {
+  const { id: taskID } = req.params;
+  if (!taskID || taskID.trim() === '') {
     return res
       .status(400)
       .json({ success: false, error: 'Task id is required.' });
   }
-  const { name, completed } = req.body;
   try {
-    const task = await Task.findByIdAndUpdate(id, req.body, { new: true });
+    const task = await Task.findByIdAndUpdate(taskID, req.body, {
+      new: true,
+      runValidators: true,
+    });
     if (!task) {
       return res
         .status(404)
@@ -62,7 +64,9 @@ const updateTask = async (req, res) => {
     }
     res.status(200).json({ success: true, task });
   } catch (error) {
-    console.error(`Error during updating the task with id: ${id} ${req.body}`);
+    console.error(
+      `Error during updating the task with id: ${taskID} ${req.body}`
+    );
     console.error(error);
     res.status(500).json({ success: false, error: error.message });
   }
