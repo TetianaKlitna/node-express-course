@@ -9,7 +9,7 @@ const app = express();
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(['/api/v1/products', '/api/v1/query'], logger);
+app.use(logger);
 app.use(express.static('./public'));
 app.use('/api/v1/people', peopleRouter);
 
@@ -44,7 +44,7 @@ app.delete('/logoff', auth, (req, res) => {
     .json({ success: true, msg: `The ${name} is logged off` });
 });
 
-app.get('/api/v1/test', logger, (req, res) => {
+app.get('/api/v1/test', (req, res) => {
   res.status(200).json({ message: 'It worked!' });
 });
 
