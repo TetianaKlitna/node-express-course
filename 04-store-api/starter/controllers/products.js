@@ -29,7 +29,7 @@ const getAllProducts = async (req, res) => {
     const regEx = /\b(>|>=|<|<=|=)\b/g;
     let filters = numericFilters.replace(regEx, match => `-${operatorMap[match]}-`);
     console.log(filters);
-    const options = [ 'price', 'raiting' ];
+    const options = [ 'price', 'rating' ];
     filters = filters
       .split(',')
       .forEach(element => {
@@ -41,7 +41,6 @@ const getAllProducts = async (req, res) => {
       });
     ;
   }
-  console.log(queryObj);
   let result = Product.find(queryObj);
   //sort
   if (sort) {
