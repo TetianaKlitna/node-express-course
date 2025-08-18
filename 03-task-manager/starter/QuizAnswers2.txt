@@ -1,0 +1,2 @@
+1. asyncWrapper was created to avoid duplicating code with try-catch blocks and to move extra logic into middleware.
+2. return next(createCustomError(404, `Task with ID: ${taskID} is not found`));

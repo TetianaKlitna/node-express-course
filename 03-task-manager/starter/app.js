@@ -1,17 +1,17 @@
 const appEnv = require('./config/env');
 const connectDB = require('./db/connect');
-
 const express = require('express');
+const notFound = require('./middleware/not-found');
+const errorsHandlerMiddleware = require('./middleware/error-handler');
+const routerTasks = require('./routes/tasks');
 const app = express();
 
+app.use(express.static('./public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-const routerTasks = require('./routes/tasks');
 app.use('/api/v1/tasks', routerTasks);
-
-app.all('*', (req, res) => {
-  res.status(404).send('resource not found');
-});
+app.use(notFound);
+app.use(errorsHandlerMiddleware);
 
 const start = async () => {
   try {

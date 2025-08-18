@@ -165,14 +165,14 @@ const filteredNames = names.filter(
 );
 console.log(filteredNames);
 
-const titleCaseFirstNames = names.map((name) =>
+const titleCaseFirstName = names.map((name) =>
   name
     .trim()
     .split(/\s+/)
     .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
     .join(' ')
 );
-console.log(titleCaseFirstNames);
+console.log(titleCaseFirstName);
 
 names
   .filter((name) => name.trim().split(' ').length === 2)
