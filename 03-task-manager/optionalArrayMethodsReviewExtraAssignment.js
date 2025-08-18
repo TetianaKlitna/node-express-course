@@ -157,8 +157,8 @@ const names = [
   'Amy You',
 ];
 
-const lastNamesArr = names.map((name) => name.trim().split(' ').pop());
-console.log(lastNamesArr);
+const lastNames = names.map((name) => name.trim().split(' ').pop());
+console.log(lastNames);
 
 const filteredNames = names.filter(
   (name) => name.trim().split(' ').length === 2
@@ -183,7 +183,7 @@ names
       .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
       .join(' ')
   )
-  .filter((name) => name.endsWith('z'))
+  .filter((name) => name[name.length - 1] !== 'z')
   .forEach((name) => console.log(`${name}, please sign up`));
 
 ///////////////////////////////////////////////////////////////////////////////
