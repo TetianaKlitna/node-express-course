@@ -157,8 +157,8 @@ const names = [
   'Amy You',
 ];
 
-const lastNames = names.map((name) => name.trim().split(' ').pop());
-console.log(lastNames);
+const lastNamesArr = names.map((name) => name.trim().split(' ').pop());
+console.log(lastNamesArr);
 
 const filteredNames = names.filter(
   (name) => name.trim().split(' ').length === 2
