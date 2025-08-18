@@ -157,22 +157,23 @@ const names = [
   'Amy You',
 ];
 
-const lastNames = names.map((name) => name.trim().split(' ').pop());
-console.log(lastNames);
+const lastNamesArr = names.map((name) => name.trim().split(' ').pop());
+console.log(lastNamesArr);
 
 const filteredNames = names.filter(
   (name) => name.trim().split(' ').length === 2
 );
 console.log(filteredNames);
 
-const titleCaseFirstName = names.map((name) =>
+const titleCaseFirstNames = names.map((name) =>
   name
     .trim()
     .split(/\s+/)
     .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
     .join(' ')
 );
-console.log(titleCaseFirstName);
+
+console.log(titleCaseFirstNames);
 
 names
   .filter((name) => name.trim().split(' ').length === 2)
@@ -183,7 +184,7 @@ names
       .map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
       .join(' ')
   )
-  .filter((name) => name[name.length - 1] !== 'z')
+  .filter((name) => name.endsWith('z'))
   .forEach((name) => console.log(`${name}, please sign up`));
 
 ///////////////////////////////////////////////////////////////////////////////
