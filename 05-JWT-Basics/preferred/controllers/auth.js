@@ -9,7 +9,7 @@ const logon = async (req, res) => {
   }
   const id = new Date().getTime();
   const token = jwt.sign({ id, username:name }, process.env.JWT_SECRET, {
-    expiresIn: '5d',
+    expiresIn: '24h',
   });
   res.status(StatusCodes.OK).json({ msg: 'User created', token });
 };
