@@ -8,8 +8,8 @@ const logon = async (req, res) => {
     throw new BadRequestError('Please provide name and password');
   }
   const id = new Date().getTime();
-  const token = jwt.sign({ id, username:name }, process.env.JWT_SECRET, {
-    expiresIn: '24h',
+  const token = jwt.sign({ id, username: name }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_LIFETIME || '24h',
   });
   res.status(StatusCodes.OK).json({ msg: 'User created', token });
 };
